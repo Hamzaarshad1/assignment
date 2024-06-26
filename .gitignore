@@ -9,3 +9,6 @@
 # TypeScript compiled files
 */dist/
 */build/
+
+# Ignore coverage directory
+*/coverage/
