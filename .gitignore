@@ -1,0 +1,11 @@
+# .gitignore
+
+#node modules
+*/node_modules/
+
+#env
+*/.env
+
+# TypeScript compiled files
+*/dist/
+*/build/
