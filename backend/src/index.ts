@@ -1,11 +1,34 @@
-import express, { Request, Response } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
+import cors from 'cors'; // Import the cors middleware
+import bodyParser from 'body-parser';
+import pessengerRouter from './routes/pessengerRoutes';
+import connectDB from './config/db.config';
+import { NotFoundError } from './utils/customError';
+import errorHandler from './middlewares/errorHandler';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app: Application = express();
+const PORT = process.env.PORT || 0;
 
+// CORS Configuration
+const corsOptions = {
+  origin: '*', // Allow all origins for development. Change this in production.
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+};
+
+// Apply the CORS middleware
+app.use(cors(corsOptions));
+
+// Connect to MongoDB
+connectDB();
+
+// Middleware
+app.use(bodyParser.json());
+
+// Health check
 app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'ok',
@@ -14,9 +37,20 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-//Start the server
+// User routes
+app.use('/api/passengers', pessengerRouter);
+
+// Fallback for unknown routes
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  next(new NotFoundError(`Cannot find ${req.originalUrl} on this server!`));
+});
+
+// Global error handling middleware
+app.use(errorHandler);
+
+// Start the server
 const server = app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
 export { app, server };

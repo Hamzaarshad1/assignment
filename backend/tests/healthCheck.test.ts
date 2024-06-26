@@ -1,4 +1,3 @@
-// src/index.test.ts
 import request from 'supertest';
 import { app, server } from '../src';
 
