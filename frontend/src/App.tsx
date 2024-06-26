@@ -1,9 +1,7 @@
+import { DataProvider } from './context';
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">Hello world</header>
-    </div>
-  );
+  return <DataProvider>Hello World</DataProvider>;
 }
 
 export default App;
