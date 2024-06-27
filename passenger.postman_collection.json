@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "2d4257b8-3437-43f2-8bf2-19575c061a5b",
+		"name": "passenger",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34698820"
+	},
+	"item": [
+		{
+			"name": "Create Passenger",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"MR\",\n    \"firstName\": \"Hamza\",\n    \"lastName\": \"Arshad\",\n    \"street\": \"wexstr\",\n    \"zipcode\": \"10715\",\n    \"city\": \"Berlin\",\n    \"email\": \"hamza.101@gmail.com\",\n    \"phone\": \"017656952191\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/passengers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"passengers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Passenger",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"MR\",\n    \"firstName\": \"Hamza\",\n    \"lastName\": \"Arshad\",\n    \"street\": \"wexstr\",\n    \"zipcode\": \"10715\",\n    \"city\": \"Berlin\",\n    \"email\": \"hamza.101@gmail.com\",\n    \"phone\": \"017656952191\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/passengers/:id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"passengers",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "667d767723dc89afadd091c0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Passenger",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/passengers/:id",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"passengers",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "667837630c56ec2baf7dba76"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All passengers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/passengers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"passengers"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
