@@ -5,10 +5,12 @@ import Passenger from '../src/models/passenger'; // Adjust path based on your pr
 
 describe('PUT /api/passengers/:id API Endpoints', () => {
   afterEach(async () => {
+    await Passenger.deleteMany({});
     jest.clearAllMocks();
   });
 
   afterAll(async () => {
+    await Passenger.deleteMany({});
     await server.close();
     await mongoose.disconnect();
   });
@@ -58,8 +60,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
     updatedPassenger = await Passenger.findById(passengerId);
 
     expect(updatedPassenger?.hasUpdated).toBe(true);
-
-    await Passenger.findByIdAndDelete(passengerId);
   });
 
   it('should update passenger data and set hasupdate to true with valid fields', async () => {
@@ -108,8 +108,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
     const updatedPassenger = await Passenger.findById(savedPassenger._id);
 
     expect(updatedPassenger?.hasUpdated).toBe(true);
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should update passenger data only once', async () => {
@@ -175,8 +173,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toBe('Data has been already updated.');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger with invalid ID format', async () => {
@@ -243,8 +239,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Title is required');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if title is invalid', async () => {
@@ -269,8 +263,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Title can only be ["mr", "mrs"]');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if first name is missing', async () => {
@@ -297,8 +289,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('First name is required');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if first name is empty', async () => {
@@ -324,8 +314,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('First name cannot be empty');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passengerif last name is missing', async () => {
@@ -352,8 +340,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Last name is required');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passengerif last name is empty', async () => {
@@ -381,8 +367,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Last name cannot be empty');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if street is missing', async () => {
@@ -409,8 +393,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Street is required');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if street is empty string', async () => {
@@ -439,8 +421,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Street cannot be empty');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Zipcode is missing', async () => {
@@ -469,8 +449,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Zipcode is required');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Zipcode is empty', async () => {
@@ -500,8 +478,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Zipcode cannot be empty');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Zipcode cannot be alphabet', async () => {
@@ -533,8 +509,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
     expect(res.body.message).toContain(
       'Zipcode must be in a valid format (e.g., 12345 or 12345-6789)'
     );
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if City is missing', async () => {
@@ -564,8 +538,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('City is required');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if City is empty', async () => {
@@ -596,8 +568,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('City cannot be empty');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Email is missing', async () => {
@@ -628,8 +598,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Email is required');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Email is empty', async () => {
@@ -661,8 +629,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Email cannot be empty');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Email is invalid', async () => {
@@ -694,8 +660,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Email must be a valid email address');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Phone number is missing', async () => {
@@ -727,8 +691,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Phone number is required');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Phone number is empty', async () => {
@@ -761,8 +723,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Phone number cannot be empty');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if Phone number is invalid', async () => {
@@ -795,8 +755,6 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('Phone number must contain 12 digits');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 
   it('should not update passenger if optional field DOB should ne in valid format', async () => {
@@ -829,7 +787,5 @@ describe('PUT /api/passengers/:id API Endpoints', () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toContain('DOB must be in YYYY-MM-DD format');
-
-    await Passenger.findByIdAndDelete(savedPassenger._id);
   });
 });

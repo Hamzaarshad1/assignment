@@ -5,6 +5,7 @@ import Passenger from '../src/models/passenger'; // Adjust path based on your pr
 
 describe('Post passenger API Endpoints', () => {
   afterEach(async () => {
+    await Passenger.deleteMany({});
     jest.clearAllMocks();
   });
 
@@ -310,8 +311,6 @@ describe('Post passenger API Endpoints', () => {
 
     const passenger = await Passenger.findById(response.body._id);
     expect(passenger).toBeTruthy();
-
-    await Passenger.findByIdAndDelete(response.body._id);
   });
 
   it('should create a new passengers with valid and optional field body', async () => {
@@ -344,8 +343,6 @@ describe('Post passenger API Endpoints', () => {
 
     const passenger = await Passenger.findById(response.body._id);
     expect(passenger).toBeTruthy();
-
-    await Passenger.findByIdAndDelete(response.body._id);
   });
 
   it('should create a new passengers with valid body and small case title', async () => {
@@ -377,8 +374,6 @@ describe('Post passenger API Endpoints', () => {
 
     const passenger = await Passenger.findById(response.body._id);
     expect(passenger).toBeTruthy();
-
-    await Passenger.findByIdAndDelete(response.body._id);
   });
 
   it('should not create new passenger if title is invalid', async () => {
