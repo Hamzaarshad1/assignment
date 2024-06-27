@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, useEffect, useState } from 'react';
 import { ReactNode } from 'react';
 
-export type passenger = {
+export type Passenger = {
   _id: string;
   title: string;
   firstName: string;
@@ -13,8 +13,8 @@ export type passenger = {
 };
 
 export type ContextType = {
-  data: passenger[];
-  setData: Dispatch<React.SetStateAction<passenger[]>>;
+  data: Passenger[];
+  setData: Dispatch<React.SetStateAction<Passenger[]>>;
   loading: boolean;
   setLoading: Dispatch<React.SetStateAction<boolean>>;
   error: string;
@@ -35,7 +35,7 @@ export const DataContext = createContext<ContextType>(defaultContextValue);
 export const DataProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [data, setData] = useState<passenger[]>([]);
+  const [data, setData] = useState<Passenger[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
