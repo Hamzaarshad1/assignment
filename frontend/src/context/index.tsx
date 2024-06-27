@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, useEffect, useState } from 'react';
+import React, { createContext, Dispatch, useState } from 'react';
 import { ReactNode } from 'react';
 
 export type Passenger = {

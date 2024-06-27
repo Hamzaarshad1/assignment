@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { ContextType } from '../context';
 import { getAllPassengers } from '../service/passenger.service';
 import { useContextHook } from './useContext';
@@ -15,7 +15,10 @@ export const usePassengerData = (): ContextType => {
         const result = await getAllPassengers();
         setData(result);
       } catch (error) {
-        console.error('Error fetching passenger:', error);
+        console.error(
+          'Description: An error occurred while trying to fetch the data.',
+          error
+        );
         setError(
           error instanceof Error ? error.message : 'An unknown error occurred'
         );

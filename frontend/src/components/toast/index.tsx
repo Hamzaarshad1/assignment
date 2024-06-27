@@ -1,7 +1,7 @@
-import { useContextHook } from "../../hooks/useContext";
-import Alert from "@mui/material/Alert";
-import CheckIcon from "@mui/icons-material/Check";
-import { Wrapper } from "./styled";
+import { useContextHook } from '../../hooks/useContext';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
+import { Wrapper } from './styled';
 
 export const Toast = () => {
   const { error, loading } = useContextHook();
