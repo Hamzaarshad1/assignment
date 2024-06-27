@@ -37,7 +37,7 @@ app.get('/health', (req: Request, res: Response) => {
   });
 });
 
-// User routes
+// Passenger routes
 app.use('/api/passengers', pessengerRouter);
 
 // Fallback for unknown routes
