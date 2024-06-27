@@ -11,11 +11,10 @@ function App() {
   return (
     <DataProvider>
       <Header />
-      <Toast />
       <Router>
         <Routes>
           <Route path="/" element={<Table />} />
-          <Route path="/passengerId/:passengerId" element={<Details />} />
+          <Route path="/passenger/:passengerId" element={<Details />} />
         </Routes>
       </Router>
     </DataProvider>

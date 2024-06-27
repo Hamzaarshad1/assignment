@@ -17,7 +17,6 @@ export const updatePassenger = async (passengerId: string, data: any) => {
     const response = await axios.put(`${BASE_URL}${passengerId}`, data);
     return response.data; // This returns only the response body
   } catch (error) {
-    console.log(error);
     // Handle error appropriately
     if (axios.isAxiosError(error)) {
       return error.response?.data;

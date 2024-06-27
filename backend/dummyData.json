@@ -1,0 +1,62 @@
+[
+  {
+    "title": "MR",
+    "firstName": "Hamza",
+    "lastName": "Arshad",
+    "street": "wexstr",
+    "zipcode": "10715",
+    "city": "Berlin",
+    "email": "hamza.101@gmail.com",
+    "phone": "017656952191"
+  },
+  {
+    "title": "MS",
+    "firstName": "Sophia",
+    "lastName": "Müller",
+    "street": "Kaiserstr",
+    "zipcode": "40215",
+    "city": "Düsseldorf",
+    "email": "sophia.muller@example.com",
+    "phone": "015112345678"
+  },
+  {
+    "title": "MR",
+    "firstName": "Max",
+    "lastName": "Schneider",
+    "street": "Hauptstr",
+    "zipcode": "30159",
+    "city": "Hannover",
+    "email": "max.schneider@example.com",
+    "phone": "016298765432"
+  },
+  {
+    "title": "MS",
+    "firstName": "Emma",
+    "lastName": "Davis",
+    "street": "Gartenweg",
+    "zipcode": "80331",
+    "city": "Munich",
+    "email": "emma.davis@example.com",
+    "phone": "017612345678"
+  },
+  {
+    "title": "MR",
+    "firstName": "Ali",
+    "lastName": "Khan",
+    "street": "Bahnhofstr",
+    "zipcode": "50667",
+    "city": "Cologne",
+    "email": "ali.khan@example.com",
+    "phone": "015298765432"
+  },
+  {
+    "title": "MS",
+    "firstName": "Lea",
+    "lastName": "Becker",
+    "street": "Friedrichstr",
+    "zipcode": "10117",
+    "city": "Berlin",
+    "email": "lea.becker@example.com",
+    "phone": "017112345678"
+  }
+]

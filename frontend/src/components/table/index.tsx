@@ -19,19 +19,19 @@ export const TableComponent = () => {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>title</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Street</TableCell>
-              <TableCell>Zipcode</TableCell>
+              <TableCell style={{ fontWeight: 700 }}>Title</TableCell>
+              <TableCell style={{ fontWeight: 700 }}>Name</TableCell>
+              <TableCell style={{ fontWeight: 700 }}>Email</TableCell>
+              <TableCell style={{ fontWeight: 700 }}>Phone</TableCell>
+              <TableCell style={{ fontWeight: 700 }}>Street</TableCell>
+              <TableCell style={{ fontWeight: 700 }}>Zipcode</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data?.map((passenger) => (
               <StyledTableRow
                 key={passenger._id}
-                onClick={() => navigate(`/passengerId/${passenger._id}`)}
+                onClick={() => navigate(`/passenger/${passenger._id}`)}
               >
                 <TableCell component="th" scope="row">
                   {passenger.title}

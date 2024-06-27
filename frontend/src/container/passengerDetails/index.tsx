@@ -17,7 +17,7 @@ import { useContextHook } from '../../hooks/useContext';
 export function Details() {
   const [open, setOpen] = useState(false);
   const { passengerId } = useParams();
-  const { data, setData, setLoading, setError } = useContextHook();
+  const { setLoading, setError } = useContextHook();
 
   const {
     control,
@@ -55,8 +55,9 @@ export function Details() {
           phone: data.phone || '',
         });
       } catch (error) {
-        console.log('error');
+        console.error('Error:', error);
       } finally {
+        setLoading(true);
       }
     };
 
@@ -67,8 +68,7 @@ export function Details() {
     try {
       setLoading(true);
       const resp = await updatePassenger(passengerId as string, data);
-      console.log(resp);
-      if (resp.status === 'fail' || resp.message) {
+      if (resp.status === 'fail') {
         setError(resp.message);
       }
     } catch (error) {
@@ -93,146 +93,162 @@ export function Details() {
   };
 
   return (
-    <Container>
+    <>
       <Toast />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <AccordionComponent handleOpen={handleOpen}>
-          <h3>Edit Invoice Details</h3>
-          <FieldWrapper>
-            <Controller
-              name="title"
-              control={control}
-              rules={{ required: 'Title is required' }}
-              render={({ field }) => (
-                <FormControl variant="standard" sx={{ minWidth: 160 }}>
-                  <InputLabel id="title-label">title</InputLabel>
-                  <Select
-                    {...field}
-                    labelId="title-label"
-                    id="title"
-                    label="Title"
-                    error={!!errors.title}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="mr">MR</MenuItem>
-                    <MenuItem value="mrs">MRS</MenuItem>
-                  </Select>
-                  {errors.title && (
-                    <span style={{ color: 'red' }}>
-                      {String(errors.title.message)}
-                    </span>
-                  )}
-                </FormControl>
-              )}
-            />
-            <TextField
-              id="firstName"
-              name="firstName"
-              control={control}
-              rules={{ required: 'First name is required' }}
-              label="Firstname"
-              variant="standard"
-              error={!!errors.firstName}
-              helperText={
-                errors.firstName ? String(errors.firstName.message) : ''
-              }
-            />
-            <TextField
-              id="lastName"
-              name="lastName"
-              control={control}
-              rules={{ required: 'Last name is required' }}
-              label="Lastname"
-              variant="standard"
-              error={!!errors.lastName}
-              helperText={
-                errors.lastName ? String(errors.lastName.message) : ''
-              }
-            />
-          </FieldWrapper>
-          <FieldWrapper>
-            <TextField
-              id="street"
-              name="street"
-              control={control}
-              rules={{ required: 'Street is required' }}
-              label="Street"
-              variant="standard"
-              error={!!errors.street}
-              helperText={errors.street ? String(errors.street.message) : ''}
-            />
-            <TextField
-              id="zipcode"
-              name="zipcode"
-              control={control}
-              rules={{
-                required: 'zipcode is required',
-                validate: (value: string) => {
-                  const isValidZipcode = /^\d{5}$/.test(value);
-                  return isValidZipcode || 'Invalid zipcode';
-                },
-              }}
-              label="Zipcode"
-              variant="standard"
-              error={!!errors.zipcode}
-              helperText={errors.zipcode ? String(errors.zipcode.message) : ''}
-            />
-            <TextField
-              id="city"
-              name="city"
-              control={control}
-              rules={{ required: 'City is required' }}
-              label="City"
-              variant="standard"
-              error={!!errors.city}
-              helperText={errors.city ? String(errors.city.message) : ''}
-            />
-          </FieldWrapper>
-          <FieldWrapper>
-            <TextField
-              id="email"
-              name="email"
-              control={control}
-              rules={{
-                required: 'Email is required',
-                pattern: {
-                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: 'Invalid email address',
-                },
-              }}
-              label="Email"
-              variant="standard"
-              error={!!errors.email}
-              helperText={errors.email ? String(errors.email.message) : ''}
-            />
-            <TextField
-              id="phone"
-              name="phone"
-              control={control}
-              rules={{
-                required: 'Phone is required',
-                validate: (value: string) => {
-                  const isValidPhoneNumber = /^\d{12}$/.test(value);
-                  return isValidPhoneNumber || 'Invalid phone number';
-                },
-              }}
-              label="Phone"
-              variant="standard"
-              error={!!errors.phone}
-              helperText={errors.phone ? String(errors.phone.message) : ''}
-            />
-          </FieldWrapper>
-        </AccordionComponent>
-        <ModalComponent
-          open={open}
-          onClose={handleClose}
-          onSubmit={onSubmit}
-          handleClose={handleClose}
-          handleSubmit={handleSubmit}
-        />
-      </form>
-    </Container>
+      <Container>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <AccordionComponent handleOpen={handleOpen}>
+            <h3>Edit Invoice Details</h3>
+            <FieldWrapper>
+              <Controller
+                name="title"
+                control={control}
+                rules={{ required: 'Title is required' }}
+                render={({ field }) => (
+                  <FormControl variant="standard" sx={{ minWidth: 160 }}>
+                    <InputLabel id="title-label">Title</InputLabel>
+                    <Select
+                      {...field}
+                      labelId="title-label"
+                      id="title"
+                      label="Title"
+                      error={!!errors.title}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value="MR">MR</MenuItem>
+                      <MenuItem value="MRS">MRS</MenuItem>
+                    </Select>
+                    {errors.title && (
+                      <span style={{ color: 'red' }}>
+                        {String(errors.title.message)}
+                      </span>
+                    )}
+                  </FormControl>
+                )}
+              />
+              <TextField
+                id="firstName"
+                name="firstName"
+                control={control}
+                rules={{
+                  required: 'First name is required',
+                  validate: (value: string) => {
+                    const isValidFirstName = /^[a-zA-Z-]{2,}$/.test(value);
+                    return isValidFirstName || 'Invalid FirstName';
+                  },
+                }}
+                label="Firstname"
+                variant="standard"
+                error={!!errors.firstName}
+                helperText={
+                  errors.firstName ? String(errors.firstName.message) : ''
+                }
+              />
+              <TextField
+                id="lastName"
+                name="lastName"
+                control={control}
+                rules={{
+                  required: 'Last name is required',
+                  validate: (value: string) => {
+                    const isValidLastName = /^[a-zA-Z-]{2,}$/.test(value);
+                    return isValidLastName || 'Invalid LastName';
+                  },
+                }}
+                label="Lastname"
+                variant="standard"
+                error={!!errors.lastName}
+                helperText={
+                  errors.lastName ? String(errors.lastName.message) : ''
+                }
+              />
+            </FieldWrapper>
+            <FieldWrapper>
+              <TextField
+                id="street"
+                name="street"
+                control={control}
+                rules={{ required: 'Street is required' }}
+                label="Street"
+                variant="standard"
+                error={!!errors.street}
+                helperText={errors.street ? String(errors.street.message) : ''}
+              />
+              <TextField
+                id="zipcode"
+                name="zipcode"
+                control={control}
+                rules={{
+                  required: 'zipcode is required',
+                  validate: (value: string) => {
+                    const isValidZipcode = /^\d{5}$/.test(value);
+                    return isValidZipcode || 'Invalid zipcode';
+                  },
+                }}
+                label="Zipcode"
+                variant="standard"
+                error={!!errors.zipcode}
+                helperText={
+                  errors.zipcode ? String(errors.zipcode.message) : ''
+                }
+              />
+              <TextField
+                id="city"
+                name="city"
+                control={control}
+                rules={{ required: 'City is required' }}
+                label="City"
+                variant="standard"
+                error={!!errors.city}
+                helperText={errors.city ? String(errors.city.message) : ''}
+              />
+            </FieldWrapper>
+            <FieldWrapper>
+              <TextField
+                id="email"
+                name="email"
+                control={control}
+                rules={{
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Invalid email address',
+                  },
+                }}
+                label="Email"
+                variant="standard"
+                error={!!errors.email}
+                helperText={errors.email ? String(errors.email.message) : ''}
+              />
+              <TextField
+                id="phone"
+                name="phone"
+                control={control}
+                rules={{
+                  required: 'Phone is required',
+                  validate: (value: string) => {
+                    const isValidPhoneNumber = /^\d{12}$/.test(value);
+                    return isValidPhoneNumber || 'Invalid phone number';
+                  },
+                }}
+                label="Phone"
+                variant="standard"
+                error={!!errors.phone}
+                helperText={errors.phone ? String(errors.phone.message) : ''}
+              />
+            </FieldWrapper>
+          </AccordionComponent>
+          <ModalComponent
+            open={open}
+            onClose={handleClose}
+            onSubmit={onSubmit}
+            handleClose={handleClose}
+            handleSubmit={handleSubmit}
+          />
+        </form>
+      </Container>
+    </>
   );
 }
