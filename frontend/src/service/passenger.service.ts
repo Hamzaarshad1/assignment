@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3000/api/passengers/';
+const BASE_URL = 'http://localhost:3001/api/passengers/';
 
 export const getPassengerById = async (passengerId: string) => {
   try {
@@ -15,10 +15,13 @@ export const getPassengerById = async (passengerId: string) => {
 export const updatePassenger = async (passengerId: string, data: any) => {
   try {
     const response = await axios.put(`${BASE_URL}${passengerId}`, data);
-    return response.data;
+    return response.data; // This returns only the response body
   } catch (error) {
-    console.error('Error updating passenger data:', error);
-    throw error;
+    console.log(error);
+    // Handle error appropriately
+    if (axios.isAxiosError(error)) {
+      return error.response?.data;
+    }
   }
 };
 

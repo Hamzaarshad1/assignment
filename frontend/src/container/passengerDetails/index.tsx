@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm, Controller, set } from 'react-hook-form';
-import { AccordionComponent, TextField } from '../../components';
+import { AccordionComponent, TextField, Toast } from '../../components';
 import { Container, FieldWrapper } from './styled';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
@@ -43,6 +43,7 @@ export function Details() {
     const fetchData = async () => {
       try {
         const data = await getPassengerById(passengerId as string);
+
         reset({
           title: data.title || '',
           firstName: data.firstName || '',
@@ -54,6 +55,7 @@ export function Details() {
           phone: data.phone || '',
         });
       } catch (error) {
+        console.log('error');
       } finally {
       }
     };
@@ -61,17 +63,18 @@ export function Details() {
     fetchData();
   }, [passengerId, reset]);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     try {
       setLoading(true);
-      updatePassenger(passengerId as string, data);
+      const resp = await updatePassenger(passengerId as string, data);
+      console.log(resp);
+      if (resp.status === 'fail' || resp.message) {
+        setError(resp.message);
+      }
     } catch (error) {
       setError(
-        error instanceof Error
-          ? error.message
-          : 'An error occurred while updating the data'
+        error instanceof Error ? error.message : 'Internal server error'
       );
-      console.error('Error updating passenger:', error);
     } finally {
       setLoading(false);
       handleClose();
@@ -91,6 +94,7 @@ export function Details() {
 
   return (
     <Container>
+      <Toast />
       <form onSubmit={handleSubmit(onSubmit)}>
         <AccordionComponent handleOpen={handleOpen}>
           <h3>Edit Invoice Details</h3>
@@ -112,9 +116,8 @@ export function Details() {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value="MR">MR</MenuItem>
-                    <MenuItem value="MRS">MRS</MenuItem>
-                    <MenuItem value="DR">DR.</MenuItem>
+                    <MenuItem value="mr">MR</MenuItem>
+                    <MenuItem value="mrs">MRS</MenuItem>
                   </Select>
                   {errors.title && (
                     <span style={{ color: 'red' }}>
