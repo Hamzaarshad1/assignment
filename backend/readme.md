@@ -22,6 +22,11 @@ This project provides REST APIs for managing passenger data, including functiona
   cd backend
   Setup Environment Variables:
 
+### Data improt
+
+- To add the data in the DB you can use the following data.
+  https://github.com/Hamzaarshad1/assignment/blob/main/backend/dummyData.json
+
 ### .ENV
 
 Create a .env file in the root directory based on .env.example. Replace placeholders with your actual configuration.
