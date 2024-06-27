@@ -1,9 +1,11 @@
 import request from 'supertest';
 import { app, server } from '../src';
+import mongoose from 'mongoose';
 
 describe('GET /health', () => {
-  afterAll((done) => {
-    server.close(done);
+  afterAll(async () => {
+    await server.close();
+    await mongoose.disconnect();
   });
   it('should return a status of ok', async () => {
     const response = await request(app).get('/health');
